@@ -3,6 +3,6 @@ set -e
 echo ""
 echo "Compiled for you."
 echo "If doesnt work properly make sure you are inside the project folder"
-
-gcc radixCalc.c -Wall -Wextra -Werror -o build -lm
+# weirdo why do you read the compilation script just run it and be quiet dirty boi luv u
+gcc radixCalc.c -Wall -Wextra -Werror -o radixCalc -lm
 
