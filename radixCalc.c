@@ -89,24 +89,39 @@ int TranslateToDecimalBase(char* RadixNum, int OriginalRadixBase) {
 	return RadixBase10Number;
 }
 
-void TranslateToNonDecimalBase(char *RadixNum, int RadixBase10Number, int TargetRadixBase, char TotalNumber[70]) {
-	int strLen = strlen(RadixNum);
-	int lastDivisionNumber = RadixBase10Number;
+char *TranslateToNonDecimalBase(int DecimalRadixNumber, int TargetRadixBase) {
+	char *TotalNumber = malloc(sizeof(char)*50);
+	int occupiedBytes = 1;
+	*TotalNumber = '\n';
+	int NumberToDivide = DecimalRadixNumber;
 	while (true) {
-		if (lastDivisionNumber == 0) {
-			break;
+		int division = NumberToDivide / TargetRadixBase; // INTEGER DIVISION!	
+		int Remainder = NumberToDivide * (division - TargetRadixBase); // only works if division was produced in an integer division
+		if (occupiedBytes != 0) {
+			memmove(TotalNumber+1, TotalNumber, occupiedBytes);
 		}
-		int division = lastDivisionNumber / TargetRadixBase;
-
-		memmove(TotalNumber +1, TotalNumber, strLen+1);
-		int numberToPut = lastDivisionNumber - (division * TargetRadixBase);
-		if (numberToPut > 9) {
-			TotalNumber[0] = 'A' + (numberToPut-10);
+		if (Remainder < 10) {
+			*TotalNumber = '0' + Remainder; // 0 has a specific ascii number and its counting up to 9 so basically ascii representation of 0 plus the int 9 equals 9 in ascii
 		} else {
-			TotalNumber[0] = '0' + (numberToPut);
+			*TotalNumber = 'A' + (Remainder - 10); // if remainder is 10 we want to produce A so remove the ten and ascii of A plus zero still equals A
 		}
-		lastDivisionNumber = division;
-	}	
+
+		occupiedBytes++;
+		
+		if (division == 0) {
+			break;
+		} else {
+			NumberToDivide = division;
+		}
+	}
+	
+	char *OptimizedStringNumber = malloc(sizeof(char)*occupiedBytes); // return a string with the fit to the number - small optimization will be unnoticeable
+	strcpy(OptimizedStringNumber, TotalNumber);
+
+	free(TotalNumber);
+	TotalNumber = NULL;
+
+	return OptimizedStringNumber;
 }
 
 
