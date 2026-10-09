@@ -9,21 +9,6 @@
 int valueTable[256];
 int IntToCharTable[26];
 
-void initTable(void) {
-	for (int i = 0; i<256l; i++) {
-		valueTable[i] = -1;
-	}
-	for (int i = 0; i<10; i++) {
-		valueTable['0' + i] = i;
-	}
-	for (int i = 0; i<26; i++) {
-		valueTable['A' + i] = i+10;
-	}
-	for (int i = 0; i<26; i++) {
-		valueTable['a' + i] = i+10;
-	}
-
-}
 
 bool getStr(char StrPTR[30]) {
 	printf("\n:");
@@ -52,7 +37,6 @@ bool strToInt(int *Number, char str[]) {
 		*(Number) = (int)Linput;
 		return true;
 	}
-
 }
 
 
@@ -68,7 +52,13 @@ bool getInt(int *Number) {
 }
 
 int singleCharacterToInt(char Char) {
-	return valueTable[(unsigned int)Char] ;
+	if (Char >= 'A' && Char <= 'Z') {
+		return Char - 'A' + 10; 
+	} else if  (Char >= 'a' && Char <= 'z') {
+		return Char - 'a' + 10;
+	} else {
+		return -1;
+	}
 }
 
 
@@ -82,6 +72,8 @@ int TranslateToDecimalBase(char* RadixNum, int OriginalRadixBase) {
 			printf("Invalid Charcter: %s\n", &RadixNum[strLen-i-1]);
 			printf("\n Invalid characters");
 			return 2;
+		} else if (Num >= OriginalRadixBase) {
+			printf("This letter doesn't exist in base %d", OriginalRadixBase);
 		}
 
 		RadixBase10Number += Num * pow(OriginalRadixBase, i);
@@ -228,7 +220,7 @@ int ArithmeticOnNonDecimalBases() {
 
 int main()
 {
-	initTable();
+
 
 	printf("\n[1] - Convert bases");
 	printf("\n[2] - Arithemtic operations on non decimal bases");
