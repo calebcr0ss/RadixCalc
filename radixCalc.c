@@ -158,10 +158,12 @@ int ConvertBasesMain() {
 	if (TargetRadixBase == 10) {
 		return 0;
 	}
-	char TotalNumber[70] = "";
-	TranslateToNonDecimalBase("", RadixBase10Number, TargetRadixBase, TotalNumber);	
+	char *TotalNumber; 
+	TotalNumber = TranslateToNonDecimalBase(RadixBase10Number, TargetRadixBase);	
 
 	printf("\nRadix %d: %s\n",TargetRadixBase, TotalNumber);
+	free(TotalNumber);
+	TotalNumber = NULL;
 	return 0;
 
 }
@@ -204,30 +206,22 @@ int ArithmeticOnNonDecimalBases() {
 		strToInt(&Radix10Two, RadixNumSecond);
 	}
 	printf("\n\n%s %c %s\n", RadixNumFirst, ArithemticOperation[0], RadixNumSecond);
-
+	int Answer;
 	if (ArithemticOperation[0] == '+') {
-		int Answer = Radix10One + Radix10Two;
-		char answerInOriginalBase[70]; 
-		TranslateToNonDecimalBase("", Answer, OriginalRadixBase, answerInOriginalBase);
-		printf("Equals: %s\n", answerInOriginalBase);
+		Answer = Radix10One + Radix10Two;
 	} else if (ArithemticOperation[0] == '-') {
-		int Answer = Radix10One - Radix10Two;
-		char answerInOriginalBase[70]; 
-		TranslateToNonDecimalBase("", Answer, OriginalRadixBase, answerInOriginalBase);
-		printf("Equals: %s\n", answerInOriginalBase);
+		Answer = Radix10One - Radix10Two;
 	} else if (ArithemticOperation[0] == '/') {
-		int Answer = Radix10One / Radix10Two;
-		char answerInOriginalBase[70]; 
-		TranslateToNonDecimalBase("", Answer, OriginalRadixBase, answerInOriginalBase);
-		printf("Equals: %s\n", answerInOriginalBase);
+		Answer = Radix10One / Radix10Two;
 	} else if (ArithemticOperation[0] == '*') {
-		int Answer = Radix10One * Radix10Two;
-		char answerInOriginalBase[70]; 
-		TranslateToNonDecimalBase("", Answer, OriginalRadixBase, answerInOriginalBase);
-		printf("Equals: %s\n", answerInOriginalBase);
+		Answer = Radix10One * Radix10Two;
 	}
+	char *AnswerTranslatedToOriginalBase;
+	AnswerTranslatedToOriginalBase = TranslateToNonDecimalBase(Answer, OriginalRadixBase);
+	printf("Equals: %s\n", AnswerTranslatedToOriginalBase);
 
-
+	free(AnswerTranslatedToOriginalBase);
+	AnswerTranslatedToOriginalBase = NULL;
 	return 0;
 }
 
