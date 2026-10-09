@@ -90,13 +90,14 @@ int TranslateToDecimalBase(char* RadixNum, int OriginalRadixBase) {
 }
 
 char *TranslateToNonDecimalBase(int DecimalRadixNumber, int TargetRadixBase) {
+	printf("\n\n %d | %d\n\n", DecimalRadixNumber, TargetRadixBase);
 	char *TotalNumber = malloc(sizeof(char)*50);
 	int occupiedBytes = 1;
 	*TotalNumber = '\n';
 	int NumberToDivide = DecimalRadixNumber;
 	while (true) {
 		int division = NumberToDivide / TargetRadixBase; // INTEGER DIVISION!	
-		int Remainder = NumberToDivide * (division - TargetRadixBase); // only works if division was produced in an integer division
+		int Remainder = NumberToDivide - (division * TargetRadixBase); // only works if division was produced in an integer division
 		if (occupiedBytes != 0) {
 			memmove(TotalNumber+1, TotalNumber, occupiedBytes);
 		}
@@ -149,7 +150,7 @@ int ConvertBasesMain() {
 		if (!strToInt(&RadixBase10Number, RadixNum)) return 2; // transfer the radix num to int and pushes it to radixbase10num 
 								       // -   confident no errors because Base10 doesnt include letters
 	} else {
-		OriginalRadixBase = TranslateToDecimalBase(RadixNum, OriginalRadixBase);
+		RadixBase10Number= TranslateToDecimalBase(RadixNum, OriginalRadixBase);
 	}
 
 	
