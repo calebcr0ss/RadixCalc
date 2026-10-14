@@ -205,7 +205,7 @@ int ArithmeticOnNonDecimalBases() {
 	} else if (ArithemticOperation[0] == '-') {
 		Answer = Radix10One - Radix10Two;
 	} else if (ArithemticOperation[0] == '/') {
-		Answer = Radix10One / Radix10Two;
+		Answer = (Double)Radix10One / Radix10Two;
 	} else if (ArithemticOperation[0] == '*') {
 		Answer = Radix10One * Radix10Two;
 	}
